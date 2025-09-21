@@ -1,0 +1,122 @@
+﻿<!DOCTYPE html>
+<html lang="zh-Hant">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Lords Mobile 文獻掉落模擬器</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <main class="layout">
+      <section class="card settings-card" aria-labelledby="settings-title">
+        <h1 id="settings-title">文獻設定（預設 1500 抽）</h1>
+        <div class="form-row">
+          <label class="field" for="coin-input">
+            <span class="field-label">消耗古幣</span>
+            <input
+              id="coin-input"
+              class="input"
+              type="number"
+              min="0"
+              step="100"
+              inputmode="numeric"
+              aria-describedby="settings-hint"
+            />
+          </label>
+          <div class="stats">
+            <div class="stat">
+              <span class="stat-label">可抽次數</span>
+              <span id="available-draws" class="stat-value mono">0</span>
+            </div>
+            <div class="stat">
+              <span class="stat-label">已抽次數</span>
+              <span id="used-draws" class="stat-value mono">0</span>
+            </div>
+          </div>
+        </div>
+        <div class="button-row">
+          <button id="draw-button" class="btn primary" type="button">抽 10 次</button>
+          <button id="reset-button" class="btn" type="button">重置</button>
+          <button id="draw-all-button" class="btn" type="button">一次抽光</button>
+        </div>
+        <p id="settings-hint" class="description">
+          每 10 抽必有 1 抽為「無用」，因此每輪 10 抽中只有 9 次有機會抽到【書】（書本以外全部視為「無用」且不顯示、不計數）。
+        </p>
+        <p id="status-message" class="status-message" role="status" aria-live="polite"></p>
+      </section>
+
+      <section class="card history-card" aria-labelledby="history-title">
+        <h2 id="history-title">每 10 抽記錄</h2>
+        <div id="history-list" class="history-list" aria-live="polite">
+          <p class="empty-placeholder">尚未進行抽卡</p>
+        </div>
+      </section>
+
+      <section class="card summary-card" aria-labelledby="summary-title">
+        <h2 id="summary-title">總結統計</h2>
+        <div class="summary-grid">
+          <div class="summary-item">
+            <span class="summary-label">累計抽數</span>
+            <span id="total-draws" class="summary-value mono">0</span>
+          </div>
+          <div class="summary-item">
+            <span class="summary-label">總計獲得</span>
+            <div class="summary-books">
+              <div class="summary-book">
+                <span class="badge badge-green">綠書</span>
+                <span id="total-green" class="mono">0</span>
+              </div>
+              <div class="summary-book">
+                <span class="badge badge-blue">藍書</span>
+                <span id="total-blue" class="mono">0</span>
+              </div>
+              <div class="summary-book">
+                <span class="badge badge-purple">紫書</span>
+                <span id="total-purple" class="mono">0</span>
+              </div>
+            </div>
+          </div>
+          <div class="summary-item">
+            <span class="summary-label">總折合金書</span>
+            <span id="total-gold" class="summary-value mono">0.00000</span>
+          </div>
+        </div>
+        <div class="expectation">
+          <p>單一有效抽的金書期望值 ≈ <span class="mono">0.1854425926 本</span></p>
+          <p>10 連實際每抽的金書期望值（考慮 10 抽保底無用） ≈ <span class="mono">0.1668983333 本/抽</span></p>
+          <div class="expectation-result">
+            <span class="summary-label">實際金書 / 期望金書</span>
+            <span id="expectation-ratio" class="summary-value mono">--</span>
+            <span id="expectation-tag" class="expectation-tag" aria-live="polite"></span>
+            <span id="expectation-diff" class="expectation-diff mono"></span>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <section class="card reference-card" aria-labelledby="reference-title">
+      <h2 id="reference-title">文獻掉落參考資料</h2>
+      <p class="reference-note">每 10 抽有 1 抽為無用（不計入下表）</p>
+      <p class="reference-note">1 金 = 6 紫 = 36 藍 = 216 綠</p>
+      <p class="reference-note">單一有效抽 EV（金書）≈ 0.1854425926；10 連實際每抽 EV ≈ 0.1668983333</p>
+      <div class="table-wrapper">
+        <table class="drop-table">
+          <thead>
+            <tr>
+              <th scope="col">稀有度</th>
+              <th scope="col">冊數</th>
+              <th scope="col">機率</th>
+              <th scope="col">出現次數</th>
+              <th scope="col">預期出現次數</th>
+              <th scope="col">相差</th>
+            </tr>
+          </thead>
+          <tbody id="drop-table-body"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <script src="main.js" defer></script>
+  </body>
+</html>
+
